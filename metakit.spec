@@ -1,9 +1,10 @@
 %define name 	metakit
-%define version 2.4.9.3
-%define release %mkrel 3
+%define version 2.4.9.7
+%define release %mkrel 1
 
-%define major 	0
+%define major 	1
 %define libname %mklibname %{name} %{major}
+%define soname libmk4.so.1
 
 Summary: 	Embeddable database
 Name: 		%{name}
@@ -12,10 +13,11 @@ Release: 	%{release}
 License: 	GPL
 Group: 		System/Libraries
 BuildRoot: 	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
-Source: 	http://www.equi4.com/pub/mk/%{name}-%{version}.tar.bz2
-Patch:		%name-2.4.9.2-version.patch
+Source: 	http://www.equi4.com/pub/mk/%{name}-%{version}.tar.gz
+Patch0:		metakit-2.4.9.7-flags.patch
+Patch1:		metakit-2.4.9.6-alt-soname.patch
 URL: 		http://www.equi4.com/metakit/
-BuildRequires:	tcl python-devel
+BuildRequires:	tcl-devel python-devel 
 
 %description
 MetaKit is an embeddable database which runs on Unix, Windows, Macintosh,
@@ -96,25 +98,29 @@ from each of them.
 
 %prep
 %setup -q
+%patch0 -p0
+%patch1 -p1
 rm -rf builds/tests/CVS
-cd unix
-%patch -p1
 
 %build
 cd unix
-perl -pi -e "s/^CXXFLAGS.*/CXXFLAGS = $RPM_OPT_FLAGS/" Makefile.in
+perl -pi -e "s/^CXXFLAGS.*/CXXFLAGS = $RPM_OPT_FLAGS -fPIC/" Makefile.in
 perl -p -i -e "s|python2.3|python%{pyver}||g" configure
 cd ../builds
 CONFIGURE_TOP="../unix" %configure2_5x --enable-python --with-python=/usr --with-tcl=/usr/include
-%make
+%make MK4_SONAME=%soname
+
+export LD_LIBRARY_PATH=`pwd`
+make test 
 
 %install
+rm -rf %buildroot
 mkdir -p %buildroot/%py_sitedir
-cd builds
-%makeinstall_std
+%makeinstall_std -C builds MK4_SONAME=%soname
+mv %buildroot%{_prefix}/lib/Mk4tcl %buildroot%{_libdir}/
 
 %clean
-rm -rf $RPM_BUILD_ROOT
+rm -rf %buildroot
 
 %post -n %{libname} -p /sbin/ldconfig
 %postun -n %{libname} -p /sbin/ldconfig
@@ -126,9 +132,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -n %{libname}-devel
 %defattr(-, root, root)
-%doc README CHANGES  doc demos examples WHATSNEW
+%doc README CHANGES doc demos examples 
 %{_libdir}/*.so
-%{_libdir}/*.*a
 %{_includedir}/*
 
 %files -n python-%name
@@ -139,6 +144,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -n %name-tcl
 %defattr(-, root, root)
-%doc README
+%doc doc/tcl.html doc/tcl.gif doc/e4s.gif
 %{_libdir}/Mk4tcl
 
