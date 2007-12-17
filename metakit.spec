@@ -12,7 +12,6 @@ Version: 	%{version}
 Release: 	%{release}
 License: 	GPL
 Group: 		System/Libraries
-BuildRoot: 	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 Source: 	http://www.equi4.com/pub/mk/%{name}-%{version}.tar.gz
 Patch0:		metakit-2.4.9.7-flags.patch
 Patch1:		metakit-2.4.9.6-alt-soname.patch
