@@ -119,9 +119,6 @@ make test
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/%{py_puresitedir}
 %makeinstall_std -C builds MK4_SONAME=%{soname}
-if [ "%{_prefix}/lib" != "%{_libdir}" ]; then
-	mv %{buildroot}%{_prefix}/lib/Mk4tcl %{buildroot}%{_libdir}/
-fi
 
 %clean
 rm -rf %{buildroot}
