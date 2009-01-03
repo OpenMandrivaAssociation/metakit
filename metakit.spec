@@ -6,7 +6,7 @@
 Summary: 	Embeddable database
 Name: 		metakit
 Version: 	2.4.9.7
-Release: 	%{mkrel 5}
+Release: 	%mkrel 6
 License: 	MIT
 Group: 		System/Libraries
 BuildRoot: 	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
