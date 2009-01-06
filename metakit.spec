@@ -107,9 +107,10 @@ rm -rf builds/tests/CVS
 %build
 cd unix
 sed -i -e "s/^CXXFLAGS.*/CXXFLAGS = %{optflags} -fPIC/" Makefile.in
-sed -i -e "s|python2.3|python%{pyver}|g" configure
 cd ../builds
-CONFIGURE_TOP="../unix" %configure2_5x --enable-python --with-python=/usr --with-tcl=/usr/include,%{tcl_sitearch}
+CONFIGURE_TOP="../unix" %configure2_5x --enable-python \
+	--with-python="%{_includedir}/python%{python_version},%{_libdir}/python%{python_version}" \
+	--with-tcl=%{_includedir},%{tcl_sitearch}
 %make MK4_SONAME=%{soname}
 
 export LD_LIBRARY_PATH=`pwd`
