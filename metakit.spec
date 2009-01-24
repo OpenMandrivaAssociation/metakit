@@ -14,6 +14,7 @@ Source0: 	http://www.equi4.com/pub/mk/%{name}-%{version}.tar.gz
 Patch0:		metakit-2.4.9.7-flags.patch
 Patch1:		metakit-2.4.9.6-alt-soname.patch
 Patch2:		metakit-2.4.9.7-tcl8.6.patch
+Patch3:		metakit-2.4.9.7-linkage.patch
 URL: 		http://www.equi4.com/metakit/
 BuildRequires:	tcl-devel
 BuildRequires:	python-devel 
@@ -102,6 +103,7 @@ from each of them.
 %patch0 -p0
 %patch1 -p1
 %patch2 -p1
+%patch3 -p0
 rm -rf builds/tests/CVS
 
 %build
@@ -109,16 +111,18 @@ cd unix
 sed -i -e "s/^CXXFLAGS.*/CXXFLAGS = %{optflags} -fPIC/" Makefile.in
 cd ../builds
 CONFIGURE_TOP="../unix" %configure2_5x --enable-python \
-	--with-python="%{_includedir}/python%{python_version},%{_libdir}/python%{python_version}" \
+	--with-python="%{_includedir}/python%{python_version},%{py_platsitedir}" \
 	--with-tcl=%{_includedir},%{tcl_sitearch}
-%make MK4_SONAME=%{soname}
+%make MK4_SONAME=%{soname} TCL_LIB=-ltcl PYTHON_LIB=-lpython%{py_ver}
 
+%check
+cd builds
 export LD_LIBRARY_PATH=`pwd`
 make test 
 
 %install
 rm -rf %{buildroot}
-mkdir -p %{buildroot}/%{py_puresitedir}
+mkdir -p %{buildroot}/%{py_platsitedir}
 %makeinstall_std -C builds MK4_SONAME=%{soname}
 
 %clean
@@ -145,8 +149,8 @@ rm -rf %{buildroot}
 %files -n python-%{name}
 %defattr(-, root, root)
 %doc README
-%py_sitedir/Mk4py.so
-%py_sitedir/metakit.py
+%{py_platsitedir}/Mk4py.so
+%{py_platsitedir}/metakit.py
 
 %files -n %{name}-tcl
 %defattr(-, root, root)
