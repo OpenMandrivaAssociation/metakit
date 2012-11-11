@@ -1,0 +1,22 @@
+--- metakit-2.4.9.6/unix/Makefile.in.orig	2006-11-15 16:16:30 +0300
++++ metakit-2.4.9.6/unix/Makefile.in	2007-01-29 21:35:15 +0300
+@@ -97,7 +97,8 @@
+ 			$(srcdir)/../include/mk4.inl \
+ 			$(srcdir)/../include/mk4str.h \
+ 			$(srcdir)/../include/mk4str.inl $(DESTDIR)$(includedir)
+-	$(INSTALL_PROGRAM) libmk4$(LIBEXT) $(DESTDIR)$(libdir)
++	$(INSTALL_PROGRAM) $(MK4_SONAME) $(DESTDIR)$(libdir)
++	ln -sf $(MK4_SONAME) $(DESTDIR)$(libdir)/libmk4$(LIBEXT)
+ 	if [ '${LIBEXT}' = '.a' ]; then ranlib $(DESTDIR)$(libdir)/libmk4.a; fi
+ 
+ install-tcl: Mk4tcl$(LIBEXT)
+@@ -134,7 +135,8 @@
+ 	ranlib $@
+ 
+ libmk4$(SHLIB_SUFFIX): $(LOBJS) $(LINK_SPECIAL_FILES)
+-	$(SHLIB_LD) -o $@ $(LOBJS) $(LINK_SPECIAL_FLAGS)
++	$(SHLIB_LD) -o $(MK4_SONAME) $(LOBJS) -Wl,-soname=$(MK4_SONAME) $(LINK_SPECIAL_FLAGS)
++	ln -sf $(MK4_SONAME) $@
+ 
+ Mk4tcl$(LIB_SUFFIX): mk4tcl.o mk4too.o $(LOBJS)
+ 	ar rcu $@ mk4tcl.o mk4too.o $(LOBJS)

@@ -1,0 +1,15 @@
+--- unix/Makefile.in.ori	2007-08-26 14:45:06.000000000 +0200
++++ unix/Makefile.in	2007-08-26 14:58:11.000000000 +0200
+@@ -62,9 +62,9 @@
+ 
+ #---------- Do not change, shorthand only
+ 
+-CXX_SWITCHES      = $(CXXFLAGS) -I$(srcdir)/../src -I.
+-CXX_SWITCHES_TCL  = $(CXXFLAGS) -I$(tclincludedir)/generic -I$(tclincludedir)
+-CXX_SWITCHES_PY   = $(CXXFLAGS) -I$(srcdir)/../python/scxx -I$(pyincludedir)
++CXX_SWITCHES      = $(CXXFLAGS) -I$(srcdir)/../src -I. -I../include
++CXX_SWITCHES_TCL  = $(CXXFLAGS) -I$(tclincludedir)/generic -I$(tclincludedir) -I../include
++CXX_SWITCHES_PY   = $(CXXFLAGS) -I$(srcdir)/../python/scxx -I$(pyincludedir) -I../include
+ 
+ #---------- The targets normally specified when calling "make"
+ 
