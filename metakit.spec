@@ -157,3 +157,91 @@ rm -rf %{buildroot}
 %doc doc/tcl.html doc/tcl.gif doc/e4s.gif
 %{tcl_sitearch}/Mk4tcl
 
+
+
+%changelog
+* Tue Nov 02 2010 Michael Scherer <misc@mandriva.org> 2.4.9.7-8mdv2011.0
++ Revision: 592429
+- rebuild for python 2.7
+
+* Mon Sep 14 2009 Thierry Vignaud <tv@mandriva.org> 2.4.9.7-7mdv2010.0
++ Revision: 439800
+- rebuild
+
+* Sat Jan 24 2009 Funda Wang <fwang@mandriva.org> 2.4.9.7-6mdv2009.1
++ Revision: 333294
+- finally fix build
+- specify python via configure options
+- rebuild
+
+* Fri Dec 05 2008 Adam Williamson <awilliamson@mandriva.org> 2.4.9.7-5mdv2009.1
++ Revision: 310861
+- drop now useless (and broken) x86-64 workaround
+- rebuild for new tcl
+- move tcl stuff to new location per policy
+- spec clean
+- add tcl8.6.patch (fix build for Tcl 8.6)
+- correct license (it's MIT not GPL)
+- new devel policy
+
+* Tue Jul 29 2008 Thierry Vignaud <tv@mandriva.org> 2.4.9.7-4mdv2009.0
++ Revision: 252345
+- rebuild
+
+  + Pixel <pixel@mandriva.com>
+    - do not call ldconfig in %%post/%%postun, it is now handled by filetriggers
+
+* Thu Jan 03 2008 Olivier Blin <oblin@mandriva.com> 2.4.9.7-2mdv2008.1
++ Revision: 140953
+- restore BuildRoot
+
+  + Thierry Vignaud <tv@mandriva.org>
+    - kill re-definition of %%buildroot on Pixel's request
+
+* Sun Aug 26 2007 Pascal Terjan <pterjan@mandriva.org> 2.4.9.7-2mdv2008.0
++ Revision: 71486
+- 2.4.9.7
+- Add P1 to get again a soname (Patch from Alt)
+- Move tcl lib in lib64 on 64 bits
+- Add -fPIC
+- Fix build (missing -I)
+
+
+* Fri Nov 04 2005 Michael Scherer <misc@mandriva.org> 2.4.9.3-3mdk
+- fix naming of python module
+- enhance description
+- use macro
+- mkrel
+
+* Mon Jan 10 2005 Austin Acton <austin@mandrake.org> 2.4.9.3-2mdk
+- rebuild for python
+
+* Sat Jul 17 2004 Michael Scherer <misc@mandrake.org> 2.4.9.3-1mdk
+- New release 2.4.9.3
+- rpmbuildupdate aware
+
+* Mon Apr 07 2003 Guillaume Cottenceau <gc@mandrakesoft.com> 2.4.9.2-2mdk
+- add another provides to the -devel
+
+* Mon Mar 31 2003 Austin Acton <aacton@yorku.ca> 2.4.9.2-1mdk
+- cleanup spec
+- update
+- use mklibname
+- add docs, demos
+- add python and tcl extensions
+- redo patch
+
+* Tue Jan 28 2003 Lenny Cartier <lenny@mandrakesoft.com> 2.4.6-3mdk
+- rebuild
+
+* Thu Sep 05 2002 Lenny Cartier <lenny@mandrakesoft.com> 2.4.6-2mdk
+- rebuild
+
+* Mon Jun 03 2002 Guillaume Cottenceau <gc@mandrakesoft.com> 2.4.6-1mdk
+- recompile against latest libstdc++
+- new version
+- provide library version so that we can use dynamic library as usual
+
+* Mon Feb 18 2002 Guillaume Cottenceau <gc@mandrakesoft.com> 2.4.3-1mdk
+- first mdk release as a separate package (was previously inside simgear)
+
