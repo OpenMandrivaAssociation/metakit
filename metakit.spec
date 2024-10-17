@@ -15,7 +15,7 @@ Patch0:		metakit-2.4.9.7-flags.patch
 Patch1:		metakit-2.4.9.6-alt-soname.patch
 Patch2:		metakit-2.4.9.7-tcl8.6.patch
 Patch3:		metakit-2.4.9.7-linkage.patch
-URL: 		http://www.equi4.com/metakit/
+URL: 		https://www.equi4.com/metakit/
 BuildRequires:	tcl-devel
 BuildRequires:	python-devel 
 
